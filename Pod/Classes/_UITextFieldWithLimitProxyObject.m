@@ -14,5 +14,18 @@
     [self.delegate textField:textField shouldChangeCharactersInRange:range replacementString:string];
     return YES;
 }
+- (void)textFieldDidBeginEditing:(UITextField *)textField
+{
+    if ([self.delegate respondsToSelector:@selector(textFieldDidBeginEditing:)]) {
+        [self.delegate textFieldDidBeginEditing:textField];
+    }
+}
+
+- (BOOL)textFieldShouldReturn:(UITextField *)textField
+{
+    if ([self.delegate respondsToSelector:@selector(textFieldShouldReturn:)]) {
+        [self.delegate textFieldShouldReturn:textField];
+    }
+}
 
 @end

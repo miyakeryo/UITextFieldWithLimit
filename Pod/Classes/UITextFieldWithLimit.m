@@ -148,5 +148,18 @@
     [self.limitLabel.layer addAnimation:shake forKey:@"position"];
 }
 
+- (void)textFieldDidBeginEditing:(UITextField *)textField
+{
+    if ([self.limitDelegate respondsToSelector:@selector(textFieldDidBeginEditing:)]) {
+        [self.limitDelegate textFieldDidBeginEditing:textField];
+    }
+}
+
+- (BOOL)textFieldShouldReturn:(UITextField *)textField
+{
+    if ([self.limitDelegate respondsToSelector:@selector(textFieldShouldReturn:)]) {
+        [self.limitDelegate textFieldShouldReturn:textField];
+    }
+}
 
 @end
