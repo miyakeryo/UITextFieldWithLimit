@@ -66,17 +66,26 @@
 
 }
 
+- (NSInteger)lengthOfText:(NSString*)text
+{
+    if ([self.limitDelegate respondsToSelector:@selector(lengthOfText:)]) {
+        return [self.limitDelegate lengthOfText:text];
+    } else {
+        return text.length;
+    }
+}
+
 - (void)updateLimitedTextField:(UITextField *) textField {
     if (textField.markedTextRange) {
         return;
     }
 
-    if ([textField.text length] == self.maxLength.integerValue) {//Did reach limit
+    if ([self lengthOfText:textField.text] == self.maxLength.integerValue) {//Did reach limit
         if ([self.limitDelegate respondsToSelector:@selector(textFieldLimit:didReachLimitWithLastEnteredText:inRange:)]) {
             [self.limitDelegate textFieldLimit:self didReachLimitWithLastEnteredText:self.lastReplacementString inRange:NSMakeRange(self.lastReplaceRange.location, self.lastReplaceRange.length)];
         }
     }
-    if ([textField.text length] > self.maxLength.integerValue) {
+    if ([self lengthOfText:textField.text] > self.maxLength.integerValue) {
         [self shakeLabel];
         if ([self.limitDelegate respondsToSelector:@selector(textFieldLimit:didWentOverLimitWithDisallowedText:inDisallowedRange:)]) {
             [self.limitDelegate textFieldLimit:self didWentOverLimitWithDisallowedText:self.lastReplacementString inDisallowedRange:NSMakeRange(self.lastReplaceRange.location, self.lastReplaceRange.length)];
@@ -96,7 +105,7 @@
         textField.selectedTextRange = selectedTextRange;
 
     }
-    [self.limitLabel setText:[@(self.maxLength.integerValue - textField.text.length) stringValue]];
+    [self.limitLabel setText:[@(self.maxLength.integerValue - [self lengthOfText:textField.text]) stringValue]];
 }
 
 - (void)_textFieldBegin:(id) _textFieldDidEnd {

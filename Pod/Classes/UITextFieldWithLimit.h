@@ -16,6 +16,8 @@
 - (void)textFieldLimit:(UITextFieldWithLimit *) textFieldLimit didWentOverLimitWithDisallowedText:(NSString *) text inDisallowedRange:(NSRange) range;
 
 - (void)textFieldLimit:(UITextFieldWithLimit *) textFieldLimit didReachLimitWithLastEnteredText:(NSString *) text inRange:(NSRange) range;
+
+- (NSInteger)lengthOfText:(NSString *) text;
 @end
 
 @interface UITextFieldWithLimit : UITextField <UITextFieldDelegate>
